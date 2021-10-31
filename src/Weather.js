@@ -7,7 +7,7 @@ import WeatherInfo from "./WeatherInfo";
 
 export default function Weather(props) {
   const [weatherData, setWeatherData] = useState({ ready: false });
-  const [city, setCity] = useState(props.DefaultCity);
+  const [city, setCity] = useState(props.defaultCity);
 
   function handleResponse(response) {
     console.log(response);
@@ -18,11 +18,9 @@ export default function Weather(props) {
       humidity: response.data.main.humidity,
       wind: Math.round(response.data.wind.speed),
       description: response.data.weather[0].description,
-      iconId: response.data.weather[0].icon,
-      iconUrl: "https://ssl.gstatic.com/onebox/weather/64/partly_cloudy.png",
+      iconUrl: `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
       date: new Date(response.data.dt * 1000),
     });
-    console.log(weatherData.date);
   }
 
   function handleSubmit(event) {
