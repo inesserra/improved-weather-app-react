@@ -2,32 +2,26 @@ import React, { useState } from "react";
 import "./Weather.css";
 import axios from "axios";
 import { BeatLoader } from "react-spinners";
+import FormatDate from "./FormatDate";
 
 export default function Weather(props) {
   const [weatherData, setWeatherData] = useState({ ready: false });
   const [city, setCity] = useState(props.defaultCity);
 
   function handleResponse(response) {
+    console.log(response);
     setWeatherData({
       ready: true,
       city: response.data.name,
       temperature: Math.round(response.data.main.temp),
       humidity: response.data.main.humidity,
-      wind: response.data.wind.speed,
+      wind: Math.round(response.data.wind.speed),
       description: response.data.weather[0].description,
       iconId: response.data.weather[0].icon,
       iconUrl: "https://ssl.gstatic.com/onebox/weather/64/partly_cloudy.png",
-      date: "Saturday 16:28",
+      date: new Date(response.data.dt * 1000),
     });
-  }
-
-  function search() {
-    const apiKey = "8f3eca2ec14098a615b00621ad86d76d";
-
-    let units = "metric";
-    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}
-    `;
-    axios.get(apiUrl).then(handleResponse);
+    console.log(weatherData.date);
   }
 
   function handleSubmit(event) {
@@ -37,6 +31,14 @@ export default function Weather(props) {
 
   function setNewCity(event) {
     setCity(event.target.value);
+  }
+
+  function search() {
+    const apiKey = "8f3eca2ec14098a615b00621ad86d76d";
+    let units = "metric";
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}
+    `;
+    axios.get(apiUrl).then(handleResponse);
   }
 
   if (weatherData.ready) {
@@ -78,7 +80,9 @@ export default function Weather(props) {
           <div className="col-4 CurrentTime">
             <h1>{weatherData.city}</h1>
             <ul>
-              <li>{weatherData.date}</li>
+              <li>
+                <FormatDate date={weatherData.date} />
+              </li>
               <li className="text-capitalize">{weatherData.description}</li>
             </ul>
           </div>
