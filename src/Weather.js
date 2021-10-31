@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import "./Weather.css";
 import axios from "axios";
 import { BeatLoader } from "react-spinners";
-import FormatDate from "./FormatDate";
+
+import WeatherInfo from "./WeatherInfo";
 
 export default function Weather(props) {
   const [weatherData, setWeatherData] = useState({ ready: false });
-  const [city, setCity] = useState(props.defaultCity);
+  const [city, setCity] = useState(props.DefaultCity);
 
   function handleResponse(response) {
     console.log(response);
@@ -64,29 +65,7 @@ export default function Weather(props) {
             </div>
           </div>
         </form>
-        <div className="row MainDisplay">
-          <div className="col-4">
-            <img src={weatherData.iconUrl} alt="weather icon" />
-            <span className="Temperature">{weatherData.temperature}</span>
-            <span className="Celsius">°C</span> |{" "}
-            <span className="Farenheight">°F</span>
-          </div>
-          <div className="col-4">
-            <ul className="RainWind">
-              <li>Humidity: {weatherData.humidity}%</li>
-              <li>Wind: {weatherData.wind}km/h</li>
-            </ul>
-          </div>
-          <div className="col-4 CurrentTime">
-            <h1>{weatherData.city}</h1>
-            <ul>
-              <li>
-                <FormatDate date={weatherData.date} />
-              </li>
-              <li className="text-capitalize">{weatherData.description}</li>
-            </ul>
-          </div>
-        </div>
+        <WeatherInfo data={weatherData} />
       </div>
     );
   } else {
