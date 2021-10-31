@@ -1,0 +1,10 @@
+.App {
+  margin: 30px 0;
+  display: block;
+}
+
+.App footer {
+  font-size: 11px;
+  text-align: left;
+  margin-left: 25px;
+}

@@ -1,3 +1,63 @@
 .Weather {
+  font-family: Google Sans, arial, sans-serif-medium, sans-serif;
   border: 1px solid #dadde1;
+  display: block;
+  margin: 20px auto;
+  max-width: 650px;
+}
+.Weather .MainDisplay {
+  padding-left: 20px;
+  padding-right: 30px;
+}
+
+.Weather h1 {
+  font-size: 22px;
+  line-height: 26px;
+  color: #202124;
+  text-align: right;
+}
+.Weather img {
+  display: inline-block;
+  height: 60px;
+  vertical-align: top;
+  width: 60px;
+  margin-right: 6px;
+}
+.Weather form {
+  margin-bottom: 20px;
+  padding: 20px 20px 0px 20px;
+}
+
+.Weather ul {
+  list-style: none;
+}
+
+.Weather .CurrentTime {
+  font-size: 16px;
+  line-height: 20px;
+  color: #70757a;
+  text-align: right;
+}
+.Weather .Temperature {
+  font-size: 48px;
+  line-height: 60px;
+  vertical-align: top;
+  color: #202124;
+}
+.Weather .Celsius .Farenheight {
+  font-size: 16px;
+  vertical-align: top;
+  line-height: 24px;
+}
+
+.Weather .RainWind {
+  font-size: 12px;
+  line-height: 16px;
+  position: relative;
+  margin-left: -67px;
+  color: #70757a;
+}
+
+.Weather .Button {
+  padding: 6px 25px;
 }
