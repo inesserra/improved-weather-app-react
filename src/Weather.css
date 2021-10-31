@@ -44,11 +44,6 @@
   vertical-align: top;
   color: #202124;
 }
-.Weather .Celsius .Farenheight {
-  font-size: 16px;
-  vertical-align: top;
-  line-height: 24px;
-}
 
 .Weather .RainWind {
   font-size: 12px;
