@@ -1,28 +1,48 @@
 import React, { useState } from "react";
 import "./Weather.css";
 import axios from "axios";
-import { PulseLoader } from "react-spinners";
+import { BeatLoader } from "react-spinners";
 
 export default function Weather(props) {
   const [weatherData, setWeatherData] = useState({ ready: false });
+  const [city, setCity] = useState(props.defaultCity);
+
   function handleResponse(response) {
-    console.log(response.data);
     setWeatherData({
       ready: true,
+      city: response.data.name,
       temperature: Math.round(response.data.main.temp),
       humidity: response.data.main.humidity,
       wind: response.data.wind.speed,
-      city: response.data.name,
       description: response.data.weather[0].description,
       iconId: response.data.weather[0].icon,
       iconUrl: "https://ssl.gstatic.com/onebox/weather/64/partly_cloudy.png",
       date: "Saturday 16:28",
     });
   }
+
+  function search() {
+    const apiKey = "8f3eca2ec14098a615b00621ad86d76d";
+
+    let units = "metric";
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}
+    `;
+    axios.get(apiUrl).then(handleResponse);
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    search();
+  }
+
+  function setNewCity(event) {
+    setCity(event.target.value);
+  }
+
   if (weatherData.ready) {
     return (
       <div className="Weather">
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="row">
             <div className="col-9">
               <input
@@ -30,6 +50,7 @@ export default function Weather(props) {
                 placeholder="Enter a city"
                 className="form-control"
                 autoFocus="on"
+                onChange={setNewCity}
               />{" "}
             </div>
             <div className="col-3">
@@ -65,12 +86,7 @@ export default function Weather(props) {
       </div>
     );
   } else {
-    const apiKey = "8f3eca2ec14098a615b00621ad86d76d";
-
-    let units = "metric";
-    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${props.defaultCity}&appid=${apiKey}&units=${units}
-  `;
-    axios.get(apiUrl).then(handleResponse);
-    return <PulseLoader color="#4A90E2" loading={true} css="" size={15} />;
+    search();
+    return <BeatLoader color="#4A90E2" loading={true} css="" size={15} />;
   }
 }
