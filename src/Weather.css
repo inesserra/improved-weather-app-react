@@ -4,7 +4,12 @@
   display: block;
   margin: 10px auto;
   max-width: 650px;
-  padding: 15px;
+  padding: 10px;
+  background: radial-gradient(
+    905px at 4.9% 85.8%,
+    rgb(255, 243, 242) 0.1%,
+    rgb(255, 247, 220) 57.6%
+  );
 }
 .Weather .MainDisplay {
   padding-left: 20px;
@@ -21,12 +26,11 @@
   display: inline-block;
   margin-top: 5px;
   vertical-align: top;
-
   margin-right: 6px;
 }
 .Weather form {
   margin-bottom: 20px;
-  padding: 20px 20px 0px 20px;
+  padding: 10px 20px 0px 20px;
 }
 
 .Weather ul {
@@ -56,4 +60,12 @@
 
 .Weather .Button {
   padding: 6px 25px;
+}
+
+.Weather .CurrentLocation {
+  cursor: pointer;
+  font-weight: 170px;
+  text-align: center;
+  position: relative;
+  margin-left: -15px;
 }

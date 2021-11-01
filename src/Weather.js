@@ -9,9 +9,10 @@ import WeatherInfo from "./WeatherInfo";
 export default function Weather(props) {
   const [weatherData, setWeatherData] = useState({ ready: false });
   const [city, setCity] = useState(props.defaultCity);
+  const apiId = "8f3eca2ec14098a615b00621ad86d76d";
+  const units = "metric";
 
   function handleResponse(response) {
-    console.log(response);
     setWeatherData({
       ready: true,
       coord: response.data.coord,
@@ -33,11 +34,18 @@ export default function Weather(props) {
   function setNewCity(event) {
     setCity(event.target.value);
   }
+  function searchLocation(position) {
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${apiId}&units=${units}`;
+    axios.get(apiUrl).then(handleResponse);
+  }
+
+  function getCurrentLocation(event) {
+    event.preventDefault();
+    navigator.geolocation.getCurrentPosition(searchLocation);
+  }
 
   function search() {
-    const apiKey = "8f3eca2ec14098a615b00621ad86d76d";
-    let units = "metric";
-    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiId}&units=${units}
     `;
     axios.get(apiUrl).then(handleResponse);
   }
@@ -47,7 +55,7 @@ export default function Weather(props) {
       <div className="Weather">
         <form onSubmit={handleSubmit}>
           <div className="row">
-            <div className="col-9">
+            <div className="col-6">
               <input
                 type="search"
                 placeholder="Enter a city"
@@ -61,8 +69,16 @@ export default function Weather(props) {
                 type="submit"
                 value="Search"
                 className="btn btn-primary w-100 Button"
-              />{" "}
+              />
             </div>
+            <span className="col-3 CurrentLocation">
+              <input
+                type="submit"
+                value="Current Location"
+                className="btn btn-success w-120"
+                onClick={getCurrentLocation}
+              />
+            </span>
           </div>
         </form>
         <WeatherInfo data={weatherData} />
